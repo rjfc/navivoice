@@ -1,0 +1,30 @@
+body {
+    background: #EFEFEF;
+}
+
+hr {
+    margin: 7px;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-title {
+    font-size: 400%;
+    font-weight: 800;
+    font-family: 'Lato', sans-serif;
+    color: Black;
+}
+
+.command-block {
+    padding-left: 10px;
+}
+
+.command-example {
+    font-style: italic;
+}
+
+.footer {
+    padding-left: 10px;
+}

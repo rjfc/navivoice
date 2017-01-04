@@ -1,0 +1,91 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:400,700');
+body {
+    font-family: "Segoe UI", "Lucida Grande", Tahoma, sans-serif;
+    font-size: 100%;
+    width: 175px;
+    height: 100px;
+    margin: 0px !important;
+    padding: 0px !important;
+}
+
+#enableInputButton {
+    position: relative;
+    font-family: 'Roboto', sans-serif;
+    font-size: 70%;
+    background-color: #DDDDDD;
+    width: 100%;
+    top: 15px;
+    text-align: center;
+}
+
+#enableInputButton:hover {
+    cursor: pointer;
+}
+
+#popupHeader {
+    position: relative;
+    font-family: 'Roboto', sans-serif;
+    color: White;
+    font-size: 70%;
+    width: 100%;
+    height: 20px;
+    background-color: #4286F4;
+    text-align: center;
+    line-height: 20px;
+}
+
+#toggleListen {
+    position: relative;
+    font-family: 'Roboto', sans-serif;
+    font-size: 80%;
+    font-weight: Bold;
+    width: 120px;
+    height: 120px;
+    background-color: #428A45;
+    text-align: center;
+    line-height: 120px;
+    left: 27px;
+    border-radius: 50%;
+    top: 5px;
+}
+
+#toggleListen:hover {
+    color: White;
+    background-color: #428A45;
+}
+
+#toggleListen:hover {
+    cursor: pointer;
+}
+
+#commandsButton {
+    position: relative;
+    font-family: 'Roboto', sans-serif;
+    font-size: 70%;
+    width: 100%;
+    height: 20px;
+    background-color: #EDEDED;
+    text-align: center;
+    line-height: 20px;
+    top: 15px;
+}
+
+#commandsButton:hover {
+    cursor: pointer;
+}
+
+#settingsButton {
+    position: relative;
+    font-family: 'Roboto', sans-serif;
+    font-size: 70%;
+    width: 100%;
+    height: 20px;
+    background-color: #EDEDED;
+    text-align: center;
+    line-height: 20px;
+    top: 15px;
+}
+
+#settingsButton:hover {
+    cursor: pointer;
+}
