@@ -4,7 +4,7 @@
   "name": "NaviVoice",
   "short_name": "NaviVoice",
   "description": "Surf with web with just your voice!",
-  "version": "0.0.2",
+  "version": "0.0.3",
 
   "browser_action": {
     "default_icon": "images/icon.png",
