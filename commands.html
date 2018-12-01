@@ -1,0 +1,191 @@
+<!doctype html>
+<html>
+    <head>
+        <title>NaviVoice Commands</title>
+        <link rel="shortcut icon" href="images/icon.png" type="image/x-icon">
+        <link rel="stylesheet" type="text/css" href="styles/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="styles/commands.css">
+    </head>
+    <body>
+    <br>
+    <div class="container">
+        <div class="row">
+            <div class="text-center">
+                <span class="mx-auto d-block text-title">NaviVoice Commands</span>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <!-- chrome help -->
+    <div class="command-block">
+        <span class="command-title"><strong>chrome help</strong></span>
+        <br>
+        <span class="command-description">Opens a page with all commands currently available in NaviVoice, complete with a description and example if needed.</span>
+    </div>
+    <hr>
+    <!-- chrome new tab -->
+    <div class="command-block">
+        <span class="command-title"><strong>chrome new tab</strong></span>
+        <br>
+        <span class="command-description">Opens a new tab to chrome://newtab.</span>
+    </div>
+    <hr>
+    <!-- chrome close tab -->
+    <div class="command-block">
+        <span class="command-title"><strong>chrome close tab</strong></span>
+        <br>
+        <span class="command-description">Closes the active tab.</span>
+        <br>
+    </div>
+    <hr>
+    <!-- chrome close chrome -->
+    <div class="command-block">
+        <span class="command-title"><strong>chrome close chrome</strong></span>
+        <br>
+        <span class="command-description">Closes Google Chrome.</span>
+    </div>
+    <hr>
+    <!-- chrome go to -->
+    <div class="command-block">
+        <span class="command-title"><strong>chrome go to</strong> {URL}</span>
+        <br>
+        <span class="command-description">Redirects the active tab to {URL}.</span>
+        <br>
+        <span class="command-example">e.g. chrome go to reddit.com</span>
+    </div>
+    <hr>
+    <!-- chrome scroll down -->
+    <div class="command-block">
+        <span class="command-title"><strong>chrome scroll down</strong></span>
+        <br>
+        <span class="command-description">Scrolls down the active web page by the height of the window minus 100 pixels.</span>
+    </div>
+    <hr>
+    <!-- chrome scroll up -->
+    <div class="command-block">
+        <span class="command-title"><strong>chrome scroll up</strong></span>
+        <br>
+        <span class="command-description">Scrolls up the active web page by the height of the window minus 100 pixels.</span>
+    </div>
+    <hr>
+    <!-- chrome back -->
+    <div class="command-block">
+        <span class="command-title"><strong>chrome back</strong>/<strong>chrome go back</strong></span>
+        <br>
+        <span class="command-description">Redirects the active tab back one page in history.</span>
+    </div>
+    <hr>
+    <!-- chrome forwards -->
+    <div class="command-block">
+        <span class="command-title"><strong>chrome forward</strong>/<strong>chrome go forward</strong></span>
+        <br>
+        <span class="command-description">Redirects the active tab forward one page in history.</span>
+    </div>
+    <hr>
+    <!-- chrome tab -->
+    <div class="command-block">
+        <span class="command-title"><strong>chrome tab</strong> {TAB NUMBER}/<strong>chrome go to tab</strong> {TAB NUMBER}</span>
+        <br>
+        <span class="command-description">Changes the active tab to the {TAB NUMBER}.</span>
+        <br>
+        <span class="command-example">e.g. chrome go to tab 2</span>
+    </div>
+    <hr>
+    <!-- chrome click on -->
+    <div class="command-block">
+        <span class="command-title"><strong>chrome click on</strong> {LINK}</span>
+        <br>
+        <span class="command-description">Searches the active web page for the {LINK}.{LINK} can be just a snippet of the wanted link. <em>Note that this command will not work for all web pages.</em></span>
+        <br>
+        <span class="command-example">e.g. chrome click on home</span>
+    </div>
+    <hr>
+    <!-- chrome input/search -->
+    <div class="command-block">
+        <span class="command-title"><strong>chrome input</strong> {STRING}/<strong>chrome search</strong> {STRING}</span>
+        <br>
+        <span class="command-description">Fills the first text input field (if found) with {STRING}.</span>
+        <br>
+        <span class="command-example">e.g. chrome search funny cat</span>
+    </div>
+    <hr>
+    <!-- chrome explicit/explicitly input -->
+    <div class="command-block">
+        <span class="command-title"><strong>chrome explicit input</strong> {STRING} <strong>into</strong> {FIELD}</strong>/<strong>chrome explicitly input</strong> {STRING} <strong>into</strong> {FIELD}</span>
+        <br>
+        <span class="command-description">Searches the active web page for a text field with the {FIELD} placeholder text and enters {STRING} into it. Useful if more than one text input field on web page.</span>
+        <br>
+        <span class="command-example">e.g. chrome explicitly input nice picture into comment</span>
+    </div>
+    <hr>
+    <!-- chrome submit -->
+    <div class="command-block">
+        <span class="command-title"><strong>chrome submit</strong></span>
+        <br>
+        <span class="command-description">Submits the first text input field (if found) in the active web page. Usually used in conjunction with <strong>chrome input</strong> {STRING}/<strong>chrome search</strong> {STRING}.</span>
+    </div>
+    <hr>
+    <!-- chrome google -->
+    <div class="command-block">
+        <span class="command-title"><strong>chrome google</strong> {STRING}</span>
+        <br>
+        <span class="command-description">Googles {STRING}.</span>
+        <br>
+        <span class="command-example">e.g. chrome google dank memes</span>
+    </div>
+    <hr>
+    <!-- chrome stop speaking -->
+    <div class="command-block">
+        <span class="command-title"><strong>chrome stop speaking</strong></span>
+        <br>
+        <span class="command-description">Mutes the voice of NaviVoice.</span>
+    </div>
+    <hr>
+    <!-- chrome start speaking -->
+    <div class="command-block">
+        <span class="command-title"><strong>chrome start speaking</strong></span>
+        <br>
+        <span class="command-description">Unmutes the voice of NaviVoice.</span>
+    </div>
+    <hr>
+    <!-- chrome toggle -->
+    <div class="command-block">
+        <span class="command-title"><strong>chrome toggle</strong></span>
+        <br>
+        <span class="command-description">Remove the 'chrome' prefix from commands. Commands are spoken as usual but without the 'chrome' prefix.</span>
+    </div>
+    <hr>
+    <!-- toggle -->
+    <div class="command-block">
+        <span class="command-title"><strong>toggle</strong></span>
+        <br>
+        <span class="command-description">Add the 'chrome' prefix to commands. Commands are spoken as usual but with the 'chrome' prefix.</span>
+    </div>
+    <hr>
+    <!-- chrome play video -->
+    <div class="command-block">
+        <span class="command-title"><strong>chrome play video</strong></span>
+        <br>
+        <span class="command-description">Plays a YouTube video on the current page.</span>
+    </div>
+    <hr>
+    <!-- chrome pause video -->
+    <div class="command-block">
+        <span class="command-title"><strong>chrome pause video</strong></span>
+        <br>
+        <span class="command-description">Pauses a YouTube video on the current page.</span>
+    </div>
+    <hr>
+    <!-- chrome mute video -->
+    <div class="command-block">
+        <span class="command-title"><strong>chrome mute video</strong></span>
+        <br>
+        <span class="command-description">Mutes a YouTube video on the current page.</span>
+    </div>
+    <hr>
+    <div class="footer">contact@navivoice.org</div>
+    <script src="scripts/jquery-3.1.1.min.js"></script>
+    <script src="scripts/bootstrap.min.js"></script>
+    </body>
+</html>
+

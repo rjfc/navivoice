@@ -27,11 +27,11 @@ $("#down-arrow").click(function() {
 });
 
 $("#button-close").mousedown(function() {
-    $(this).css("top", "223px");
+    $(this).css("top", "323px");
 });
 
 $("#button-close").mouseup(function() {
-    $(this).css("top", "220px");
+    $(this).css("top", "320px");
 });
 
 $("#button-close").click(function() {
