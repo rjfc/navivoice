@@ -23,6 +23,7 @@ else {
     recognition.maxAlternatives = 1;
     var whatResponses = ["Yes?", "Whats up?", "What can I help you with?", "Hello.", "Hey."];
     var okResponses = ["Alright.", "I gotchu.", "Okay.", "No problem."];
+    var oneLiners = ["Alright.", "I gotchu.", "Okay.", "No problem."];
 
     startButton(event)
     recognition.onstart = function () {
@@ -242,6 +243,11 @@ else {
                                     });
                                 });
                             }
+                            else if (event.results[i][0].transcript.toLowerCase().trim().substr(7, event.results[i][0].transcript.trim().length - 1).startsWith("calculate")) {
+                                var answer = eval(event.results[i][0].transcript.toLowerCase().trim().substr(17, event.results[i][0].transcript.trim().length - 1).replace("divided by", "/").replace("multiplied by", "*").replace("x", "*").replace("times", "*"));
+                                answer = answer.toString();
+                                utterance = new SpeechSynthesisUtterance(event.results[i][0].transcript.toLowerCase().trim().substr(17, event.results[i][0].transcript.trim().length - 1) + " is " + answer);
+                            }
                             else if (event.results[i][0].transcript.toLowerCase().trim() == ("chrome")) {
                                 utterance = new SpeechSynthesisUtterance(whatResponses[Math.floor(Math.random()*whatResponses.length)]);
                             }
@@ -437,7 +443,7 @@ else {
                             chrome.tabs.create({url: "https://misscaptainalex.files.wordpress.com/2013/05/210.gif"});
                             utterance = new SpeechSynthesisUtterance("JULIAN BOOLEAN!");
                         }
-                        else if (event.results[i][0].transcript.toLowerCase().trim() == ("pause video") || event.results[i][0].transcript.toLowerCase().trim() == ("play video") || event.results[i][0].transcript.toLowerCase().trim() == ("paws video") ) {
+                        else if (event.results[i][0].transcript.toLowerCase().trim() == ("pause video") || event.results[i][0].transcript.toLowerCase().trim() == ("play video") || event.results[i][0].transcript.toLowerCase().trim() == ("paws video")) {
                             chrome.tabs.executeScript(null, {file: "scripts/jquery-3.1.1.min.js"}, function () {
                                 chrome.tabs.executeScript({
                                     code: "$('.ytp-play-button').click();"
@@ -450,6 +456,11 @@ else {
                                     code: "$('.ytp-mute-button').click();"
                                 });
                             });
+                        }
+                        else if (event.results[i][0].transcript.toLowerCase().trim().startsWith("calculate")) {
+                            var answer = eval(event.results[i][0].transcript.toLowerCase().trim().substr(10, event.results[i][0].transcript.trim().length - 1).replace("divided by", "/").replace("multiplied by", "*").replace("x", "*").replace("times", "*"));
+                            answer = answer.toString();
+                            utterance = new SpeechSynthesisUtterance(event.results[i][0].transcript.toLowerCase().trim().substr(10, event.results[i][0].transcript.trim().length - 1) + " is " + answer);
                         }
                         var voice = "";
                         chrome.storage.sync.get('voice', function (result) {

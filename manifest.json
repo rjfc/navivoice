@@ -4,7 +4,8 @@
   "name": "NaviVoice",
   "short_name": "NaviVoice",
   "description": "Surf with web with just your voice!",
-  "version": "0.0.4",
+  "version": "0.0.5",
+  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
 
   "browser_action": {
     "default_icon": {                   
