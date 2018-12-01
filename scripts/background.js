@@ -296,7 +296,7 @@ else {
                                 utterance = new SpeechSynthesisUtterance(event.results[i][0].transcript.toLowerCase().trim().substr(17, event.results[i][0].transcript.trim().length - 1) + " is " + answer);
                             }
                             // chrome list links
-                            else if (event.results[i][0].transcript.toLowerCase().trim().includes("list links")) {
+                            else if (event.results[i][0].transcript.toLowerCase().trim().includes("list links") || event.results[i][0].transcript.toLowerCase().trim().includes("list link")) {
                                 /*chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
                                     chrome.tabs.insertCSS(tabs[0].id, {code: "body{counter-reset: linkCtr 0;} a{counter-increment: linkCtr 1;} a:before{content:'[' counter(linkCtr) ']';}"});
                                 });*/
@@ -575,7 +575,7 @@ else {
                             utterance = new SpeechSynthesisUtterance(event.results[i][0].transcript.toLowerCase().trim().substr(10, event.results[i][0].transcript.trim().length - 1) + " is " + answer);
                         }
                         // list links
-                        else if (event.results[i][0].transcript.toLowerCase().trim().includes("list links")) {
+                        else if (event.results[i][0].transcript.toLowerCase().trim().includes("list links") || event.results[i][0].transcript.toLowerCase().trim().includes("list link")) {
                             /*chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
                              chrome.tabs.insertCSS(tabs[0].id, {code: "body{counter-reset: linkCtr 0;} a{counter-increment: linkCtr 1;} a:before{content:'[' counter(linkCtr) ']';}"});
                              });*/
