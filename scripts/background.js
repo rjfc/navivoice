@@ -75,7 +75,7 @@ else {
                             }
                             // chrome go to
                             else if (event.results[i][0].transcript.toLowerCase().trim().includes("go to") && event.results[i][0].transcript.trim().length > 13 && event.results[i][0].transcript.toLowerCase().trim().includes(".")) {
-                                var requestedUrl = event.results[i][0].transcript.toLowerCase().trim().substr(13, event.results[i][0].transcript.trim().length - 1).replace(/\s+/g, '');
+                                var requestedUrl = event.results[i][0].transcript.toLowerCase().trim().substr(event.results[i][0].transcript.toLowerCase().trim().indexOf("go to") + 6, event.results[i][0].transcript.trim().length - 1).replace(/\s+/g, '');
                                 // reddit.com/r/ replace
                                 if (requestedUrl.includes("reddit.comslashareslash")) {
                                     requestedUrl = requestedUrl.replace("reddit.comslashareslash","reddit.com/r/");
@@ -94,13 +94,14 @@ else {
                                 utterance = new SpeechSynthesisUtterance("Redirecting you to '" + requestedUrl + "'.");
                             }
                             // chrome close tab
-                            else if (event.results[i][0].transcript.toLowerCase().trim().includes("close tab")) {
-                                if (event.results[i][0].transcript.toLowerCase().trim().length > 17) {
+                            else if (event.results[i][0].transcript.toLowerCase().trim().includes("close") && event.results[i][0].transcript.toLowerCase().trim().includes("tab")) {
+                                if (event.results[i][0].transcript.toLowerCase().trim().includes("1") || event.results[i][0].transcript.toLowerCase().trim().includes("2") || event.results[i][0].transcript.toLowerCase().trim().includes("3") || event.results[i][0].transcript.toLowerCase().trim().includes("4") || event.results[i][0].transcript.toLowerCase().trim().includes("5") || event.results[i][0].transcript.toLowerCase().trim().includes("6") || event.results[i][0].transcript.toLowerCase().trim().includes("7") || event.results[i][0].transcript.toLowerCase().trim().includes("8") || event.results[i][0].transcript.toLowerCase().trim().includes("9")) {
                                     var requestedTab = event.results[i][0].transcript.toLowerCase().trim().substr(event.results[i][0].transcript.toLowerCase().trim().indexOf("tab") + 4, event.results[i][0].transcript.toLowerCase().trim().length - 1);
                                     console.log(requestedTab);
                                     chrome.tabs.query({}, function (tabs) {
                                         chrome.tabs.remove(tabs[parseInt(requestedTab) - 1].id);
                                     });
+                                    utterance = new SpeechSynthesisUtterance("Closing tab " + requestedTab + ".");
                                 }
                                 else {
                                     chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
@@ -160,7 +161,7 @@ else {
                                 utterance = new SpeechSynthesisUtterance("Switching to tab '" + requestedTab + "'.");
                             }
                             // chrome click on
-                            else if (event.results[i][0].transcript.toLowerCase().trim().substr(7, event.results[i][0].transcript.trim().length - 1).startsWith("click on") && event.results[i][0].transcript.toLowerCase().trim().endsWith("no spaces") == false && event.results[i][0].transcript.toLowerCase().trim().length > 16) {
+                            else if (event.results[i][0].transcript.toLowerCase().trim().substr(7, event.results[i][0].transcript.trim().length - 1).startsWith("click on") && event.results[i][0].transcript.toLowerCase().trim().endsWith("no spaces") == false && event.results[i][0].transcript.toLowerCase().trim().substr(7, event.results[i][0].transcript.trim().length - 1).startsWith("click on link ") == false && event.results[i][0].transcript.toLowerCase().trim().length > 16) {
                                 var requestedLink = event.results[i][0].transcript.toLowerCase().trim().substr(16, event.results[i][0].transcript.toLowerCase().trim().length - 1);
                                 chrome.tabs.executeScript(null, {file: "scripts/jquery-3.1.1.min.js"}, function () {
                                     chrome.tabs.executeScript({
@@ -170,7 +171,7 @@ else {
                                 utterance = new SpeechSynthesisUtterance("Clicking on '" + requestedLink + "'.");
                             }
                             // chrome click on no spaces
-                            else if (event.results[i][0].transcript.toLowerCase().trim().substr(7, event.results[i][0].transcript.trim().length - 1).startsWith("click on") && event.results[i][0].transcript.toLowerCase().trim().endsWith("no spaces") && event.results[i][0].transcript.toLowerCase().trim().length > 26) {
+                            else if (event.results[i][0].transcript.toLowerCase().trim().substr(7, event.results[i][0].transcript.trim().length - 1).startsWith("click on") && event.results[i][0].transcript.toLowerCase().trim().substr(7, event.results[i][0].transcript.trim().length - 1).startsWith("click on link ") == false && event.results[i][0].transcript.toLowerCase().trim().endsWith("no spaces") && event.results[i][0].transcript.toLowerCase().trim().length > 26) {
                                 var requestedLink = event.results[i][0].transcript.toLowerCase().trim().substr(15, event.results[i][0].transcript.toLowerCase().trim().length - 25).replace(/\s+/g, '');
                                 console.log(requestedLink);
                                 chrome.tabs.executeScript(null, {file: "scripts/jquery-3.1.1.min.js"}, function () {
@@ -218,11 +219,24 @@ else {
                             }
                             // chrome submit
                             else if ((event.results[i][0].transcript.toLowerCase().trim().substr(7, event.results[i][0].transcript.trim().length - 1) == "enter" || event.results[i][0].transcript.toLowerCase().trim().substr(7, event.results[i][0].transcript.trim().length - 1) == "submit" || event.results[i][0].transcript.toLowerCase().trim().substr(7, event.results[i][0].transcript.trim().length - 1) == "search") && event.results[i][0].transcript.trim().length < 14) {
-                                chrome.tabs.executeScript(null, {file: "scripts/jquery-3.1.1.min.js"}, function () {
-                                    chrome.tabs.executeScript({
-                                        code: "$('input[type=\"text\"]').parent().find('input[type=\"submit\"]').trigger('click');"
-                                        //$('button[type=\"submit\"]').trigger('click');
-                                    });
+                                chrome.tabs.query({'active': true, 'lastFocusedWindow': true}, function (tabs) {
+                                    var url = tabs[0].url;
+                                    if (url.startsWith("https://www.reddit.com")) {
+                                        chrome.tabs.executeScript(null, {file: "scripts/jquery-3.1.1.min.js"}, function () {
+                                            chrome.tabs.executeScript({
+                                                code: "$('input[type=\"text\"]').parent().find('input[type=\"submit\"]').trigger('click');"
+                                                //$('button[type=\"submit\"]').trigger('click');
+                                            });
+                                        });
+                                    }
+                                    else {
+                                        chrome.tabs.executeScript(null, {file: "scripts/jquery-3.1.1.min.js"}, function () {
+                                            chrome.tabs.executeScript({
+                                                code: "$('button[type=\"submit\"]').trigger('click');"
+                                                //$('button[type=\"submit\"]').trigger('click');
+                                            });
+                                        });
+                                    }
                                 });
                                 utterance = new SpeechSynthesisUtterance("Submitting input.");
                             }
@@ -234,7 +248,7 @@ else {
                                 });
                             }
                             // chrome stop speaking
-                            else if (event.results[i][0].transcript.toLowerCase().trim().substr(7, event.results[i][0].transcript.trim().length - 1) == "stop speaking") {
+                            else if (event.results[i][0].transcript.toLowerCase().trim().substr(7, event.results[i][0].transcript.trim().length - 1) == "stop speaking" || event.results[i][0].transcript.toLowerCase().trim().substr(7, event.results[i][0].transcript.trim().length - 1) == "shut up" || event.results[i][0].transcript.toLowerCase().trim().substr(7, event.results[i][0].transcript.trim().length - 1) == "be quiet") {
                                 var voice = 'off';
                                 chrome.storage.sync.set({'voice': voice});
                             }
@@ -281,6 +295,28 @@ else {
                                 answer = answer.toString();
                                 utterance = new SpeechSynthesisUtterance(event.results[i][0].transcript.toLowerCase().trim().substr(17, event.results[i][0].transcript.trim().length - 1) + " is " + answer);
                             }
+                            // chrome list links
+                            else if (event.results[i][0].transcript.toLowerCase().trim().includes("list links")) {
+                                /*chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
+                                    chrome.tabs.insertCSS(tabs[0].id, {code: "body{counter-reset: linkCtr 0;} a{counter-increment: linkCtr 1;} a:before{content:'[' counter(linkCtr) ']';}"});
+                                });*/
+                                chrome.tabs.executeScript(null, {file: "scripts/jquery-3.1.1.min.js"}, function () {
+                                    chrome.tabs.executeScript({
+                                        code: "$('a').html(function(index, html) { return html + '[' + (index + 1) + ']'; })"
+                                    });
+                                });
+                                utterance = new SpeechSynthesisUtterance("Listing links.");
+                            }
+                            // chrome click on link #
+                            else if (event.results[i][0].transcript.toLowerCase().trim().includes("click on link") || event.results[i][0].transcript.toLowerCase().trim().includes("quick on link") && event.results[i][0].transcript.trim().length > 18) {
+                                var linkNum = event.results[i][0].transcript.toLowerCase().trim().substr(event.results[i][0].transcript.toLowerCase().trim().indexOf("link") + 5, event.results[i][0].transcript.trim().length - 1);
+                                chrome.tabs.executeScript(null, {file: "scripts/jquery-3.1.1.min.js"}, function () {
+                                    chrome.tabs.executeScript({
+                                        code: "window.location.href = $('a:contains(\"[" + parseInt(linkNum) + "]\")').attr('href');"
+                                    });
+                                });
+                                utterance = new SpeechSynthesisUtterance("Clicking on link " + linkNum + ".");
+                            }
                             // chrome (without follow up command)
                             else if (event.results[i][0].transcript.toLowerCase().trim() == ("chrome")) {
                                 utterance = new SpeechSynthesisUtterance(whatResponses[Math.floor(Math.random()*whatResponses.length)]);
@@ -313,7 +349,7 @@ else {
                         }
                         // go to
                         else if (event.results[i][0].transcript.toLowerCase().trim().includes("go to") && event.results[i][0].transcript.trim().length > 6 && event.results[i][0].transcript.toLowerCase().trim().includes(".")) {
-                            var requestedUrl = event.results[i][0].transcript.toLowerCase().trim().substr(6, event.results[i][0].transcript.trim().length - 1).replace(/\s+/g, '');
+                            var requestedUrl = event.results[i][0].transcript.toLowerCase().trim().substr(event.results[i][0].transcript.toLowerCase().trim().indexOf("go to") + 6, event.results[i][0].transcript.trim().length - 1).replace(/\s+/g, '');
                             // reddit.com/r/ replace
                             if (requestedUrl.includes("reddit.comslashareslash")) {
                                 requestedUrl = requestedUrl.replace("reddit.comslashareslash","reddit.com/r/");
@@ -332,13 +368,14 @@ else {
                             utterance = new SpeechSynthesisUtterance("Redirecting you to '" + requestedUrl + "'.");
                         }
                         // close tab
-                        else if (event.results[i][0].transcript.toLowerCase().trim().includes("close tab")) {
-                            if (event.results[i][0].transcript.toLowerCase().trim().length > 10) {
+                        else if (event.results[i][0].transcript.toLowerCase().trim().includes("close") && event.results[i][0].transcript.toLowerCase().trim().includes("tab")) {
+                            if (event.results[i][0].transcript.toLowerCase().trim().includes("1") || event.results[i][0].transcript.toLowerCase().trim().includes("2") || event.results[i][0].transcript.toLowerCase().trim().includes("3") || event.results[i][0].transcript.toLowerCase().trim().includes("4") || event.results[i][0].transcript.toLowerCase().trim().includes("5") || event.results[i][0].transcript.toLowerCase().trim().includes("6") || event.results[i][0].transcript.toLowerCase().trim().includes("7") || event.results[i][0].transcript.toLowerCase().trim().includes("8") || event.results[i][0].transcript.toLowerCase().trim().includes("9")) {
                                 var requestedTab = event.results[i][0].transcript.toLowerCase().trim().substr(event.results[i][0].transcript.toLowerCase().trim().indexOf("tab") + 4, event.results[i][0].transcript.toLowerCase().trim().length - 1);
                                 console.log(requestedTab);
                                 chrome.tabs.query({}, function (tabs) {
                                     chrome.tabs.remove(tabs[parseInt(requestedTab) - 1].id);
                                 });
+                                utterance = new SpeechSynthesisUtterance("Closing tab " + requestedTab + ".");
                             }
                             else {
                                 chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
@@ -398,7 +435,7 @@ else {
                             utterance = new SpeechSynthesisUtterance("Switching to tab '" + requestedTab + "'.");
                         }
                         // click on
-                        else if (event.results[i][0].transcript.toLowerCase().trim().startsWith("click on") && event.results[i][0].transcript.toLowerCase().trim().endsWith("no spaces") == false && event.results[i][0].transcript.toLowerCase().trim().length > 9) {
+                        else if (event.results[i][0].transcript.toLowerCase().trim().startsWith("click on") && event.results[i][0].transcript.toLowerCase().trim().startsWith("click on link ") == false && event.results[i][0].transcript.toLowerCase().trim().endsWith("no spaces") == false && event.results[i][0].transcript.toLowerCase().trim().length > 9) {
                             var requestedLink = event.results[i][0].transcript.toLowerCase().trim().substr(9, event.results[i][0].transcript.toLowerCase().trim().length - 1);
                             chrome.tabs.executeScript(null, {file: "scripts/jquery-3.1.1.min.js"}, function () {
                                 chrome.tabs.executeScript({
@@ -408,7 +445,7 @@ else {
                             utterance = new SpeechSynthesisUtterance("Clicking on '" + requestedLink + "'.");
                         }
                         // click on no spaces
-                        else if (event.results[i][0].transcript.toLowerCase().trim().startsWith("click on") && event.results[i][0].transcript.toLowerCase().trim().endsWith("no spaces") && event.results[i][0].transcript.toLowerCase().trim().length > 19) {
+                        else if (event.results[i][0].transcript.toLowerCase().trim().startsWith("click on") && event.results[i][0].transcript.toLowerCase().trim().startsWith("click on link ") == false && event.results[i][0].transcript.toLowerCase().trim().endsWith("no spaces") && event.results[i][0].transcript.toLowerCase().trim().length > 19) {
                             var requestedLink = event.results[i][0].transcript.toLowerCase().trim().substr(9, event.results[i][0].transcript.toLowerCase().trim().length - 19).replace(/\s+/g, '');
                             chrome.tabs.executeScript(null, {file: "scripts/jquery-3.1.1.min.js"}, function () {
                                 chrome.tabs.executeScript({
@@ -461,11 +498,24 @@ else {
                         }
                         // submit
                         else if ((event.results[i][0].transcript.toLowerCase().trim() == "enter" || event.results[i][0].transcript.toLowerCase().trim() == "submit"  || event.results[i][0].transcript.toLowerCase().trim() == "search") && event.results[i][0].transcript.trim().length < 7) {
-                            chrome.tabs.executeScript(null, {file: "scripts/jquery-3.1.1.min.js"}, function () {
-                                chrome.tabs.executeScript({
-                                    code: "$('input[type=\"text\"]').parent().find('input[type=\"submit\"]').trigger('click');"
-                                    //$('button[type=\"submit\"]').trigger('click');
-                                });
+                            chrome.tabs.query({'active': true, 'lastFocusedWindow': true}, function (tabs) {
+                                var url = tabs[0].url;
+                                if (url.startsWith("https://www.reddit.com")) {
+                                    chrome.tabs.executeScript(null, {file: "scripts/jquery-3.1.1.min.js"}, function () {
+                                        chrome.tabs.executeScript({
+                                            code: "$('input[type=\"text\"]').parent().find('input[type=\"submit\"]').trigger('click');"
+                                            //$('button[type=\"submit\"]').trigger('click');
+                                        });
+                                    });
+                                }
+                                else {
+                                    chrome.tabs.executeScript(null, {file: "scripts/jquery-3.1.1.min.js"}, function () {
+                                        chrome.tabs.executeScript({
+                                            code: "$('button[type=\"submit\"]').trigger('click');"
+                                            //$('button[type=\"submit\"]').trigger('click');
+                                        });
+                                    });
+                                }
                             });
                             utterance = new SpeechSynthesisUtterance("Submitting input.");
                         }
@@ -477,7 +527,7 @@ else {
                             });
                         }
                         // stop speaking
-                        else if (event.results[i][0].transcript.toLowerCase().trim() == "stop speaking") {
+                        else if (event.results[i][0].transcript.toLowerCase().trim() == "stop speaking" || event.results[i][0].transcript.toLowerCase().trim() == "shut up" || event.results[i][0].transcript.toLowerCase().trim() == "be quiet") {
                             var voice = 'off';
                             chrome.storage.sync.set({'voice': voice});
                         }
@@ -523,6 +573,28 @@ else {
                             var answer = eval(event.results[i][0].transcript.toLowerCase().trim().substr(10, event.results[i][0].transcript.trim().length - 1).replace("divided by", "/").replace("multiplied by", "*").replace("x", "*").replace("times", "*"));
                             answer = answer.toString();
                             utterance = new SpeechSynthesisUtterance(event.results[i][0].transcript.toLowerCase().trim().substr(10, event.results[i][0].transcript.trim().length - 1) + " is " + answer);
+                        }
+                        // list links
+                        else if (event.results[i][0].transcript.toLowerCase().trim().includes("list links")) {
+                            /*chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
+                             chrome.tabs.insertCSS(tabs[0].id, {code: "body{counter-reset: linkCtr 0;} a{counter-increment: linkCtr 1;} a:before{content:'[' counter(linkCtr) ']';}"});
+                             });*/
+                            chrome.tabs.executeScript(null, {file: "scripts/jquery-3.1.1.min.js"}, function () {
+                                chrome.tabs.executeScript({
+                                    code: "$('a').html(function(index, html) { return html + '[' + (index + 1) + ']'; })"
+                                });
+                            });
+                            utterance = new SpeechSynthesisUtterance("Listing links.");
+                        }
+                        // click on link #
+                        else if (event.results[i][0].transcript.toLowerCase().trim().includes("click on link") || event.results[i][0].transcript.toLowerCase().trim().includes("quick on link") && event.results[i][0].transcript.trim().length > 11) {
+                            var linkNum = event.results[i][0].transcript.toLowerCase().trim().substr(event.results[i][0].transcript.toLowerCase().trim().indexOf("link") + 5, event.results[i][0].transcript.trim().length - 1);
+                            chrome.tabs.executeScript(null, {file: "scripts/jquery-3.1.1.min.js"}, function () {
+                                chrome.tabs.executeScript({
+                                    code: "window.location.href = $('a:contains(\"[" + parseInt(linkNum) + "]\")').attr('href');"
+                                });
+                            });
+                            utterance = new SpeechSynthesisUtterance("Clicking on link " + linkNum + ".");
                         }
                         // if voice variable is set to on
                         var voice = "";
