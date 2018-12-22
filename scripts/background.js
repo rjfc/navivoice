@@ -52,7 +52,6 @@ else {
             recognition.start();
             return;
         }
-
         for (var i = event.resultIndex; i < event.results.length; ++i) {
             if (event.results[i].isFinal) {
                 var prefix = "";
@@ -74,24 +73,30 @@ else {
                                 var utterance = new SpeechSynthesisUtterance("Opening a new tab.");
                             }
                             // chrome go to
-                            else if (event.results[i][0].transcript.toLowerCase().trim().includes("go to") && event.results[i][0].transcript.trim().length > 13 && event.results[i][0].transcript.toLowerCase().trim().includes(".")) {
-                                var requestedUrl = event.results[i][0].transcript.toLowerCase().trim().substr(event.results[i][0].transcript.toLowerCase().trim().indexOf("go to") + 6, event.results[i][0].transcript.trim().length - 1).replace(/\s+/g, '');
-                                // reddit.com/r/ replace
-                                if (requestedUrl.includes("reddit.comslashareslash")) {
-                                    requestedUrl = requestedUrl.replace("reddit.comslashareslash","reddit.com/r/");
+                            else if (event.results[i][0].transcript.toLowerCase().trim().includes("go to") && event.results[i][0].transcript.trim().length > 13) {
+                                if (event.results[i][0].transcript.toLowerCase().trim().includes(".")) {
+                                    var requestedUrl = event.results[i][0].transcript.toLowerCase().trim().substr(event.results[i][0].transcript.toLowerCase().trim().indexOf("go to") + 6, event.results[i][0].transcript.trim().length - 1).replace(/\s+/g, '');
+                                    // reddit.com/r/ replace
+                                    if (requestedUrl.includes("reddit.comslashareslash")) {
+                                        requestedUrl = requestedUrl.replace("reddit.comslashareslash","reddit.com/r/");
+                                    }
+                                    // if user doesn't say http:// then add http:// prefix
+                                    if (requestedUrl.startsWith("http://") == false) {
+                                        chrome.tabs.update({
+                                            url: "http://" + requestedUrl
+                                        });
+                                    }
+                                    else {
+                                        chrome.tabs.update({
+                                            url: requestedUrl
+                                        });
+                                    }
+                                    utterance = new SpeechSynthesisUtterance("Redirecting you to '" + requestedUrl + "'.");
                                 }
-                                // if user doesn't say http:// then add http:// prefix
-                                if (requestedUrl.startsWith("http://") == false) {
-                                    chrome.tabs.update({
-                                        url: "http://" + requestedUrl
-                                    });
+                                else
+                                {
+                                    utterance = new SpeechSynthesisUtterance("Please specify a valid URL.");
                                 }
-                                else {
-                                    chrome.tabs.update({
-                                        url: requestedUrl
-                                    });
-                                }
-                                utterance = new SpeechSynthesisUtterance("Redirecting you to '" + requestedUrl + "'.");
                             }
                             // chrome close tab
                             else if (event.results[i][0].transcript.toLowerCase().trim().includes("close") && event.results[i][0].transcript.toLowerCase().trim().includes("tab")) {
@@ -317,6 +322,27 @@ else {
                                 });
                                 utterance = new SpeechSynthesisUtterance("Clicking on link " + linkNum + ".");
                             }
+                            // chrome history
+                            else if (event.results[i][0].transcript.toLowerCase().trim().substr(7, event.results[i][0].transcript.trim().length - 1) == "history") {
+                                chrome.tabs.update({
+                                    url: "chrome://history"
+                                });
+                                utterance = new SpeechSynthesisUtterance("Showing you your history.");
+                            }
+                            // chrome extensions
+                            else if (event.results[i][0].transcript.toLowerCase().trim().substr(7, event.results[i][0].transcript.trim().length - 1) == "extensions") {
+                                chrome.tabs.update({
+                                    url: "chrome://extensions"
+                                });
+                                utterance = new SpeechSynthesisUtterance("Showing you your extensions.");
+                            }
+                            // chrome downloads
+                            else if (event.results[i][0].transcript.toLowerCase().trim().substr(7, event.results[i][0].transcript.trim().length - 1) == "downloads") {
+                                chrome.tabs.update({
+                                    url: "chrome://downloads"
+                                });
+                                utterance = new SpeechSynthesisUtterance("Showing you your downloads.");
+                            }
                             // chrome (without follow up command)
                             else if (event.results[i][0].transcript.toLowerCase().trim() == ("chrome")) {
                                 utterance = new SpeechSynthesisUtterance(whatResponses[Math.floor(Math.random()*whatResponses.length)]);
@@ -348,24 +374,30 @@ else {
                             var utterance = new SpeechSynthesisUtterance("Opening a new tab.");
                         }
                         // go to
-                        else if (event.results[i][0].transcript.toLowerCase().trim().includes("go to") && event.results[i][0].transcript.trim().length > 6 && event.results[i][0].transcript.toLowerCase().trim().includes(".")) {
-                            var requestedUrl = event.results[i][0].transcript.toLowerCase().trim().substr(event.results[i][0].transcript.toLowerCase().trim().indexOf("go to") + 6, event.results[i][0].transcript.trim().length - 1).replace(/\s+/g, '');
-                            // reddit.com/r/ replace
-                            if (requestedUrl.includes("reddit.comslashareslash")) {
-                                requestedUrl = requestedUrl.replace("reddit.comslashareslash","reddit.com/r/");
+                        else if (event.results[i][0].transcript.toLowerCase().trim().includes("go to") && event.results[i][0].transcript.trim().length > 6) {
+                            if (event.results[i][0].transcript.toLowerCase().trim().includes(".")) {
+                                var requestedUrl = event.results[i][0].transcript.toLowerCase().trim().substr(event.results[i][0].transcript.toLowerCase().trim().indexOf("go to") + 6, event.results[i][0].transcript.trim().length - 1).replace(/\s+/g, '');
+                                // reddit.com/r/ replace
+                                if (requestedUrl.includes("reddit.comslashareslash")) {
+                                    requestedUrl = requestedUrl.replace("reddit.comslashareslash", "reddit.com/r/");
+                                }
+                                // if user doesn't say http:// then add
+                                if (requestedUrl.startsWith("http://") == false) {
+                                    chrome.tabs.update({
+                                        url: "http://" + requestedUrl
+                                    });
+                                }
+                                else {
+                                    chrome.tabs.update({
+                                        url: requestedUrl
+                                    });
+                                }
+                                utterance = new SpeechSynthesisUtterance("Redirecting you to '" + requestedUrl + "'.");
                             }
-                            // if user doesn't say http:// then add
-                            if (requestedUrl.startsWith("http://") == false) {
-                                chrome.tabs.update({
-                                    url: "http://" + requestedUrl
-                                });
+                            else
+                            {
+                                utterance = new SpeechSynthesisUtterance("Please specify a valid URL.");
                             }
-                            else {
-                                chrome.tabs.update({
-                                    url: requestedUrl
-                                });
-                            }
-                            utterance = new SpeechSynthesisUtterance("Redirecting you to '" + requestedUrl + "'.");
                         }
                         // close tab
                         else if (event.results[i][0].transcript.toLowerCase().trim().includes("close") && event.results[i][0].transcript.toLowerCase().trim().includes("tab")) {
@@ -595,6 +627,27 @@ else {
                                 });
                             });
                             utterance = new SpeechSynthesisUtterance("Clicking on link " + linkNum + ".");
+                        }
+                        // history
+                        else if (event.results[i][0].transcript.toLowerCase().trim() == "history") {
+                            chrome.tabs.update({
+                                url: "chrome://history"
+                            });
+                            utterance = new SpeechSynthesisUtterance("Showing you your history.");
+                        }
+                        // extensions
+                        else if (event.results[i][0].transcript.toLowerCase().trim() == "extensions") {
+                            chrome.tabs.update({
+                                url: "chrome://extensions"
+                            });
+                            utterance = new SpeechSynthesisUtterance("Showing you your extensions.");
+                        }
+                        // downloads
+                        else if (event.results[i][0].transcript.toLowerCase().trim() == "downloads") {
+                            chrome.tabs.update({
+                                url: "chrome://downloads"
+                            });
+                            utterance = new SpeechSynthesisUtterance("Showing you your downloads.");
                         }
                         // if voice variable is set to on
                         var voice = "";
