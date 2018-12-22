@@ -1,10 +1,15 @@
-@import url('https://fonts.googleapis.com/css?family=Lato:400,800');
+@import url('https://fonts.googleapis.com/css?family=Roboto:100,300,500,700');
+@import url('https://fonts.googleapis.com/css?family=Lato:100,300,500,700');
 body {
-    background: url("../images/enableBKG.jpg") no-repeat center center fixed;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
+    background-color: #f8f8f8;
+}
+
+a {
+    color: #FF7D66;
+}
+
+a:hover, focus{
+    color: #FF7D66;
 }
 
 .text-center {
@@ -13,99 +18,30 @@ body {
 
 .text-title {
     font-size: 500%;
-    font-weight: 800;
-    font-family: 'Lato', sans-serif;
-    color: White;
-    text-shadow: 0px 0px 10px White;
+    font-weight: 500;
+    font-family: 'Roboto', sans-serif;
+    color: #333333;
 }
 
 .text-subtitle {
     font-size: 150%;
-    font-weight: 800;
+    font-weight: 700;
     font-family: 'Lato', sans-serif;
-    color: White;
+    color: #333333;
     position: relative;
     top: 200px;
-}
-
-#text-title-navivoice {
-    position: relative;
-    top: 70px;
 }
 
 #img-mic-request {
     position: relative;
     top: 210px;
-    width: 80%;
-    box-shadow: 0px 0px 20px White;
+    width: 35%;
+    border-style: solid;
+
 }
 
-.arrow {
-    width: 5%;
-    transition: 0.2s;
-}
-
-.arrow:hover {
-    cursor: pointer;
-}
-
-#down-arrow {
-    position: relative;
-    top: 260px;
-}
-
-#slide-1 {
-    display: inline-block;
-}
-
-#slide-2 {
-    display: none;
-}
-
-#slide-3 {
-    display: none;
-}
-
-#img-icon {
-    position: relative;
-    top: 210px;
-    width: 15%;
-}
-
-.button-large {
-    font-size: 150%;
-    font-weight: Bold;
-    background-color: rgba(66, 131, 232, 1);
-    width: 150px;
-    height: 50px;
-    border-radius: 5%;
-    box-shadow: 0px 7px 0px rgba(37, 102, 206, 1);
-    padding: 10px;
-    color: Black;
-    text-align: center;
-    vertical-align: middle;
-    line-height: 30px;
-}
-
-.button-large:hover {
-    text-decoration: none;
-    color: Black;
-    background-color: rgba(37, 102, 206, 1);
-    box-shadow: 0px 7px 0px rgba(29, 88, 183, 1);
-}
-
-.button-large:active {
-    text-decoration: none;
-    color: Black;
-    box-shadow: 0px 4px 0px rgba(29, 88, 183, 1);
-}
-
-.button-large:focus {
-    text-decoration: none;
-    color: Black;
-}
-
-#button-close {
+#link-close {
     position: relative;
     top: 220px;
+    color: #FF7D66;
 }
