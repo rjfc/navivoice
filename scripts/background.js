@@ -234,6 +234,14 @@ else {
                                             });
                                         });
                                     }
+                                    else if (url.startsWith("https://www.youtube.com")) {
+                                        chrome.tabs.executeScript(null, {file: "scripts/jquery-3.1.1.min.js"}, function () {
+                                            chrome.tabs.executeScript({
+                                                code: "$('#search-icon-legacy').trigger('click');"
+                                                //$('button[type=\"submit\"]').trigger('click');
+                                            });
+                                        });
+                                    }
                                     else {
                                         chrome.tabs.executeScript(null, {file: "scripts/jquery-3.1.1.min.js"}, function () {
                                             chrome.tabs.executeScript({
@@ -264,7 +272,7 @@ else {
                             }
                             // chrome help
                             else if (event.results[i][0].transcript.toLowerCase().trim().substr(7, event.results[i][0].transcript.trim().length - 1) == "help") {
-                                chrome.tabs.create({url: "http://www.navivoice.org/commands.html"});
+                                chrome.tabs.create({url: "http://www.getnavivoice.com/commands.html"});
                                 utterance = new SpeechSynthesisUtterance("Opening help.");
                             }
                             // chrome toggle
@@ -570,7 +578,7 @@ else {
                         }
                         // help
                         else if (event.results[i][0].transcript.toLowerCase().trim() == "help") {
-                            chrome.tabs.create({url: "http://www.navivoice.org/commandsNoPrefix.html"});
+                            chrome.tabs.create({url: "http://www.getnavivoice.com/commandsNoPrefix.html"});
                             utterance = new SpeechSynthesisUtterance("Opening help.");
                         }
                         // toggle
