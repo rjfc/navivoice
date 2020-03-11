@@ -22,14 +22,14 @@ chrome.runtime.getBackgroundPage(function(bg) {
             if (prefix == "on") {
                 chrome.tabs.create({
                     active: true,
-                    url: 'http://www.navivoice.org/commands.html'
+                    url: 'http://www.getnavivoice.com/commands.html'
                 }, null);
             }
             else if (prefix == "off")
             {
                 chrome.tabs.create({
                     active: true,
-                    url: 'http://www.navivoice.org/commandsNoPrefix.html'
+                    url: 'http://www.getnavivoice.com/commandsNoPrefix.html'
                 }, null);
             }
         });
@@ -42,8 +42,8 @@ chrome.runtime.getBackgroundPage(function(bg) {
             url: 'settings.html'
         }, null);
     });
-/*
-    var toggleListen = $("#toggleListen");
+
+    /*var toggleListen = $("#toggleListen");
     toggleListen.click(function () {
         if (toggleListen.hasClass("not-listening")) {
             toggleListen.addClass("listening");
@@ -55,7 +55,7 @@ chrome.runtime.getBackgroundPage(function(bg) {
             });
         }
         else if (toggleListen.hasClass("listening")) {
-            chrome.runtime.reload();
+           // chrome.runtime.reload();
         }
     });
 
@@ -76,4 +76,4 @@ chrome.runtime.getBackgroundPage(function(bg) {
             toggleListen.css("background-color", "#53AC56");
         }
     });*/
-})
+});

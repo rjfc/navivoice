@@ -355,6 +355,11 @@ else {
                             else if (event.results[i][0].transcript.toLowerCase().trim() == ("chrome")) {
                                 utterance = new SpeechSynthesisUtterance(whatResponses[Math.floor(Math.random()*whatResponses.length)]);
                             }
+                            else if (event.results[i][0].transcript.toLowerCase().trim().includes("stop listening")) {
+                                chrome.management.getSelf(function(result) {
+                                    chrome.management.setEnabled(result.id, false)
+                                });
+                            }
                             else {
                                 utterance = new SpeechSynthesisUtterance("I don't understand " + event.results[i][0].transcript);
                             }
@@ -656,6 +661,11 @@ else {
                                 url: "chrome://downloads"
                             });
                             utterance = new SpeechSynthesisUtterance("Showing you your downloads.");
+                        }
+                        else if (event.results[i][0].transcript.toLowerCase().trim().includes("stop listening")) {
+                            chrome.management.getSelf(function(result) {
+                                chrome.management.setEnabled(result.id, false)
+                            });
                         }
                         // if voice variable is set to on
                         var voice = "";
