@@ -315,7 +315,7 @@ else {
                                 });*/
                                 chrome.tabs.executeScript(null, {file: "scripts/jquery-3.1.1.min.js"}, function () {
                                     chrome.tabs.executeScript({
-                                        code: "$('a').html(function(index, html) { return html + '[' + (index + 1) + ']'; })"
+                                        code: "$('a').html(function(index, html) { return html + \"<span style='background-color:white;position:absolute;z-index:100;'>[\" + (index + 1) + \"]</span>\"; })"
                                     });
                                 });
                                 utterance = new SpeechSynthesisUtterance("Listing links.");
@@ -355,6 +355,14 @@ else {
                             else if (event.results[i][0].transcript.toLowerCase().trim() == ("chrome")) {
                                 utterance = new SpeechSynthesisUtterance(whatResponses[Math.floor(Math.random()*whatResponses.length)]);
                             }
+                            // chrome reload
+                            else if (event.results[i][0].transcript.toLowerCase().trim().substr(7, event.results[i][0].transcript.trim().length - 1) == "reload") {
+                                chrome.tabs.query({active: true, currentWindow: true}, function (arrayOfTabs) {
+                                    var code = 'window.location.reload();';
+                                    chrome.tabs.executeScript(arrayOfTabs[0].id, {code: code});
+                                });
+                            }
+                            // chrome stop listening
                             else if (event.results[i][0].transcript.toLowerCase().trim().includes("stop listening")) {
                                 chrome.management.getSelf(function(result) {
                                     chrome.management.setEnabled(result.id, false)
@@ -626,7 +634,7 @@ else {
                              });*/
                             chrome.tabs.executeScript(null, {file: "scripts/jquery-3.1.1.min.js"}, function () {
                                 chrome.tabs.executeScript({
-                                    code: "$('a').html(function(index, html) { return html + '[' + (index + 1) + ']'; })"
+                                    code: "$('a').html(function(index, html) { return html + \"<span style='background-color:white;position:absolute;z-index:100;'>[\" + (index + 1) + \"]</span>\"; })"
                                 });
                             });
                             utterance = new SpeechSynthesisUtterance("Listing links.");
@@ -662,6 +670,14 @@ else {
                             });
                             utterance = new SpeechSynthesisUtterance("Showing you your downloads.");
                         }
+                        // reload
+                        else if (event.results[i][0].transcript.toLowerCase().trim() == "reload") {
+                            chrome.tabs.query({active: true, currentWindow: true}, function (arrayOfTabs) {
+                                var code = 'window.location.reload();';
+                                chrome.tabs.executeScript(arrayOfTabs[0].id, {code: code});
+                            });
+                        }
+                        // stop listesning
                         else if (event.results[i][0].transcript.toLowerCase().trim().includes("stop listening")) {
                             chrome.management.getSelf(function(result) {
                                 chrome.management.setEnabled(result.id, false)
