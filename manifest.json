@@ -4,7 +4,7 @@
   "name": "NaviVoice: Voice Input Productivity Assistant",
   "short_name": "NaviVoice",
   "description": "Surf the web with just your voice!",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
 
   "browser_action": {
